@@ -16,7 +16,7 @@ An event is a list of fields, which may be given as name/value pairs. A rule ass
 
 ```go
 import (
-    hypermatch "dev.azure.com/schwarzit-wiking/_git/schwarzit.hypermatch.git"
+    hypermatch "github.com/SchwarzIT/hypermatch"
 )
 
 func main() {
