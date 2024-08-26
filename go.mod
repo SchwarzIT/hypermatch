@@ -1,4 +1,4 @@
-module dev.azure.com/schwarzit-wiking/_git/schwarzit.hypermatch.git
+module github.com/SchwarzIT/hypermatch
 
 go 1.21
 
