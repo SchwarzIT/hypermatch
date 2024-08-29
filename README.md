@@ -13,10 +13,9 @@ Hypermatch is a Go library that allows blazing fast matching of a large number o
 - It matches many thousands of events per second to huge numbers of rules in-memory with low latency
 - Rules can be serialized to easy readable JSON objects
 - Features an expressive rule syntax with support for: equals, prefix, suffix, wildcard, anything-but, all-of, any-of 
+- Did we already say ... [it's really fast!](_benchmark/benchmark.md)
 
 An event is a list of fields, which may be given as name/value pairs. A rule associates event field names with pattern to match the event values.
-
-... [it's fast!](_benchmark/benchmark.md)
 
 ![example](./example.png)
 
