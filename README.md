@@ -9,13 +9,13 @@
 ![hypermatch logo](./logo/logo-small.png)
 
 # Introduction
-Hypermatch is a Go library that allows blazing fast matching of a large number of rules to events.
-- It matches many thousands of events per second to huge numbers of rules in-memory with low latency
-- Rules can be serialized to easy readable JSON objects
-- Features an expressive rule syntax with support for: equals, prefix, suffix, wildcard, anything-but, all-of, any-of 
-- Did we already say ... [it's really fast!](_benchmark/benchmark.md)
+Hypermatch is a high-performance Go library that enables rapid matching of a large number of rules against events. Designed for speed and efficiency, hypermatch handles thousands of events per second with low latency, making it ideal for real-time systems.
 
-An event is a list of fields, which may be given as name/value pairs. A rule associates event field names with pattern to match the event values.
+- **Fast Matching**: Matches events to a large set of rules in-memory with minimal delay  ... [it's really fast! (Benchmark)](_benchmark/benchmark.md)
+- **Readable Rule Format**: Serialize rules into human-readable JSON objects.
+- **Flexible Rule Syntax**: Supports various matching conditions, including equals, prefix, suffix, wildcard, anything-but, all-of, and any-of.
+
+An event consists of a list of fields, provided as name/value pairs. A rule links these event fields to patterns that determine whether the event matches.
 
 ![example](./example.png)
 
@@ -57,7 +57,7 @@ func main() {
 # Documentation
 ## Example Event
 
-An event is a list of field, expressible as a JSON object. Here is an example:
+An event is represented as a JSON object with various fields. Here’s a sample event:
 
 ```javascript
 {
@@ -75,19 +75,22 @@ An event is a list of field, expressible as a JSON object. Here is an example:
 }
 ```
 
-**This sample event is used as a reference throughout the documentation.**
+**This example will be referenced throughout the documentation.**
 
 ## Matching Basics
 
-Rules are a set of Conditions and are expressed by the **ConditionSet** type.
-- **The matching is always done case-insensitive for all values!**
-- Currently only string or string-arrays are supported as values
+Rules in Hypermatch are composed of conditions defined by the `ConditionSet` type.
 
-A condition exists of
-- **Path**: Path in the event to match to
-- **Pattern**: A patter to match the value at **Path**
+- **Case-Insensitive Matching**: All value comparisons are case-insensitive.
+- **Supported Types**: Currently, only strings and string arrays are supported.
 
-The following example matches the example event from above:
+Each condition includes:
+
+- **Path**: The field in the event to match against.
+- **Pattern**: The pattern used to match the value at the specified path.
+
+Here’s an example rule that matches the event above:
+
 ```go
 ConditionSet{
     {
@@ -122,7 +125,7 @@ ConditionSet{
 }
 ```
 
-The rules and conditions are also expressible as JSON objects. The following JSON is the equivalent of the above Go notation for a **ConditionSet**:
+The rules and conditions are also expressible as JSON objects. The following JSON is the equivalent of the above Go notation for a `ConditionSet`:
 
 ```javascript
 {
@@ -149,11 +152,11 @@ The rules and conditions are also expressible as JSON objects. The following JSO
 }
 ```
 
-The rest of the documentation uses JSON notation for easier readability.
+**Note**: For simplicity, all examples in this documentation will be presented in JSON format.
 
 ## Matching syntax
 ### "equals" matching
-**equals** checks the value of an attribute of the event for equality. The checks are always case-insensitive.
+The `equals` condition checks if an attribute of the event matches a specified value, case-insensitively.
 
 ```javascript
 {
@@ -163,11 +166,13 @@ The rest of the documentation uses JSON notation for easier readability.
 }
 ```
 
-- If the value in the event is a **string**: the value is checked for equality to "firing".
-- If the value in the event is a **string array**: it checks whether the array contains the value "firing".
+If the attribute value is type of:
+
+- **String**: Checks if the value is equal to "firing"
+- **String array**: Checks if the array contains an element equal to "firing"
 
 ### "prefix" matching
-**prefix** checks the value of an attribute of the event for a given prefix. The checks are always case-insensitive.
+The `prefix` condition checks if an attribute starts with a specified prefix, case-insensitively.
 
 ```javascript
 {
@@ -177,11 +182,13 @@ The rest of the documentation uses JSON notation for easier readability.
 }
 ```
 
-- If the value in the event is a **string**: the value is checked if it begins with "fir".
-- If the value in the event is a **string array**: it checks whether the array contains a value which begins with "fir".
+If the attribute value is type of:
+
+- **String**: Checks if the value begins with "fir"
+- **String array**: Checks if the array contains an element that begins with "fir"
 
 ### "suffix" matching
-**suffix** checks the value of an attribute of the event for a given suffix. The checks are always case-insensitive.
+The `suffix` condition checks if an attribute ends with a specified suffix, case-insensitively.
 
 ```javascript
 {
@@ -191,13 +198,17 @@ The rest of the documentation uses JSON notation for easier readability.
 }
 ```
 
-- If the value in the event is a **string**: the value is checked if it ends with "ing".
-- If the value in the event is a **string array**: it checks whether the array contains a value which end with "ing".
+If the attribute value is type of:
+
+- **String**: Checks if the value ends with "ing"
+- **String array**: Checks if the array contains an element that ends with "ing"
 
 ### "wildcard" matching
-**wildcard** allows to check the value of an attribute of the event using wildcards. The checks are always case-insensitive.
-- A wildcard is expressed using the character '*' and matches any number of characters (including zero) of the value.
-- Wildcards may not be used directly one after the other.
+The `wildcard` condition uses wildcards to match the value of an attribute, ignoring case.
+
+- Use * as a wildcard to match any number of characters (including none).
+- You cannot place wildcards directly next to each other.
+
 ```javascript
 {
     "name": {
@@ -205,11 +216,14 @@ The rest of the documentation uses JSON notation for easier readability.
     }
 }
 ```
-- If the value in the event is a **string**: the value is checked if it matches with "\*parallel requests\*".
-- If the value in the event is a **string array**: it checks whether the array contains a value which matches with "\*parallel requests\*".
+
+If the attribute value is type of:
+
+- **String**: Checks if the value matches the pattern \*parallel requests\*
+- **String array**: Checks if any value in the array matches the pattern
 
 ### "anythingBut" matching
-**anythingBut** does correspond to a boolean "not". It negates the included matching condition and triggers in the opposite case.
+The `anythingBut` condition negates the match, triggering only if the specified condition is not met.
 
 ```javascript
 {
@@ -220,12 +234,14 @@ The rest of the documentation uses JSON notation for easier readability.
     }
 }
 ```
-- If the value in the event is a **string**: the value is checked if it is anything else but "firing".
-- If the value in the event is a **string array**: it checks whether the array does **not** contain a value which is equal to "firing".
 
+If the attribute value is type of:
+
+- **String**: Checks if the value is anything other than "firing"
+- **String array**: Checks if the array does *not* contain an element equal to "firing"
 
 ### "anyOf" matching
-**anyOf** does correspond to a boolean "inclusive-or". It checks multiple conditions and matches if **any** of the conditions are true.
+`anyOf` does correspond to a boolean "inclusive-or". It checks multiple conditions and matches if **any** of the conditions are true.
 
 ```javascript
 {
@@ -237,12 +253,14 @@ The rest of the documentation uses JSON notation for easier readability.
     }
 }
 ```
-- If the value in the event is a **string**: the value is checked if it is equal to "firing" **or** "resolved"
-- If the value in the event is a **string array**: it checks whether the array does contain a value which is equal to "firing" or "resolved" or both.
 
+If the attribute value is type of:
+
+- **String**: Checks if the value is either "firing" or "resolved"
+- **String array**: Checks if the array contains an element equal to "firing" or "resolved" or both.
 
 ### "allOf" matching
-**allOf** does correspond to a boolean "and". It checks multiple conditions and matches if **all** the conditions are true.
+`allOf` does correspond to a boolean "and". It checks multiple conditions and matches if **all** the conditions are true.
 
 ```javascript
 {
@@ -254,8 +272,12 @@ The rest of the documentation uses JSON notation for easier readability.
     }
 }
 ```
-- If the value in the event is a **string**: the value is checked if it is equal to "shop" **and** "backend" (which will never be the case ;-) )
-- If the value in the event is a **string array**: it checks whether the array does contain both "shop" **and** "backend".
+
+If the attribute value is type of:
+
+- **String**: This condition makes no sense, as it checks if the value is equal to "shop" and "backend"
+- **String array**: Checks if the array contains both "shop" and "backend"
+
 
 # Performance
 
