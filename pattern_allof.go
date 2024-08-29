@@ -19,7 +19,7 @@ func validatePatternAllOf(path string, pattern *Pattern) error {
 	return nil
 }
 
-func compilePatternAllOf(id RuleIdentifier, path string, pattern *Pattern, sourceFm *FieldMatcher, exitFm *FieldMatcher) *FieldMatcher {
+func compilePatternAllOf(id RuleIdentifier, path string, pattern *Pattern, sourceFm *fieldMatcher, exitFm *fieldMatcher) *fieldMatcher {
 	lastSourceFm := sourceFm
 
 	for i, p := range pattern.Sub {

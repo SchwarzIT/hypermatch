@@ -19,7 +19,7 @@ func validatePatternAnyOf(path string, pattern *Pattern) error {
 	return nil
 }
 
-func compilePatternAnyOf(id RuleIdentifier, path string, pattern *Pattern, sourceFm *FieldMatcher, exitFm *FieldMatcher) *FieldMatcher {
+func compilePatternAnyOf(id RuleIdentifier, path string, pattern *Pattern, sourceFm *fieldMatcher, exitFm *fieldMatcher) *fieldMatcher {
 	if exitFm != nil && !exitFm.Exclusive {
 		exitFm.Exclusive = true
 	}

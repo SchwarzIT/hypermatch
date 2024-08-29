@@ -12,7 +12,7 @@ func validatePatternEquals(pattern *Pattern) error {
 	return nil
 }
 
-func compilePatternEquals(start *NfaStep, value []byte, exitFm *FieldMatcher) *FieldMatcher {
+func compilePatternEquals(start *nfaStep, value []byte, exitFm *fieldMatcher) *fieldMatcher {
 	step := start
 	for _, char := range value {
 		step = step.MakeStep(char)

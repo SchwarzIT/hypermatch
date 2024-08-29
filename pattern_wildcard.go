@@ -20,9 +20,9 @@ func validatePatternWildcard(pattern *Pattern) error {
 	return nil
 }
 
-func compilePatternWildcard(start *NfaStep, value []byte, exitFm *FieldMatcher) *FieldMatcher {
+func compilePatternWildcard(start *nfaStep, value []byte, exitFm *fieldMatcher) *fieldMatcher {
 	step := start
-	var lastWildcardStep *NfaStep
+	var lastWildcardStep *nfaStep
 	for i, char := range value {
 		if char == byteWildcard {
 			if (i == len(value)-2 && value[len(value)-1] == byteValueTerminator) || i == len(value)-1 {

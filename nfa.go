@@ -2,19 +2,19 @@ package hypermatch
 
 import "slices"
 
-type NfaStep struct {
-	ValueTransitions map[byte]*NfaStep `json:"v,omitempty"`
-	FieldTransition  []*FieldMatcher   `json:"f,omitempty"`
+type nfaStep struct {
+	ValueTransitions map[byte]*nfaStep `json:"v,omitempty"`
+	FieldTransition  []*fieldMatcher   `json:"f,omitempty"`
 }
 
-func newNfaStep() *NfaStep {
-	return &NfaStep{
-		ValueTransitions: make(map[byte]*NfaStep),
+func newNfaStep() *nfaStep {
+	return &nfaStep{
+		ValueTransitions: make(map[byte]*nfaStep),
 		FieldTransition:  nil,
 	}
 }
 
-func (n *NfaStep) MakeStep(char byte) *NfaStep {
+func (n *nfaStep) MakeStep(char byte) *nfaStep {
 	s, ok := n.ValueTransitions[char]
 	if !ok {
 		s = newNfaStep()
@@ -23,7 +23,7 @@ func (n *NfaStep) MakeStep(char byte) *NfaStep {
 	return s
 }
 
-func (n *NfaStep) addOrReuseOrCreateFieldTransition(fm *FieldMatcher) *FieldMatcher {
+func (n *nfaStep) addOrReuseOrCreateFieldTransition(fm *fieldMatcher) *fieldMatcher {
 	if fm != nil {
 		if slices.Index(n.FieldTransition, fm) == -1 {
 			n.FieldTransition = append(n.FieldTransition, fm)
@@ -43,7 +43,7 @@ func (n *NfaStep) addOrReuseOrCreateFieldTransition(fm *FieldMatcher) *FieldMatc
 	}
 }
 
-func transitionNfa(step *NfaStep, value []byte, transitions []*FieldMatcher) []*FieldMatcher {
+func transitionNfa(step *nfaStep, value []byte, transitions []*fieldMatcher) []*fieldMatcher {
 	if len(value) == 0 {
 		return nil
 	}

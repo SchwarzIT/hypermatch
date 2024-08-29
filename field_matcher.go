@@ -1,33 +1,33 @@
 package hypermatch
 
-type FieldMatcher struct {
-	Transitions                        map[string]*ValueMatcher                    `json:"t,omitempty"`
+type fieldMatcher struct {
+	Transitions                        map[string]*valueMatcher                    `json:"t,omitempty"`
 	MatchingRuleIdentifiers            []RuleIdentifier                            `json:"m,omitempty"`
 	MatchingAnythingButRuleIdentifiers []RuleIdentifier                            `json:"n,omitempty"`
-	AnythingButTransitions             map[string]map[RuleIdentifier]*FieldMatcher `json:"o,omitempty"`
+	AnythingButTransitions             map[string]map[RuleIdentifier]*fieldMatcher `json:"o,omitempty"`
 	Exclusive                          bool                                        `json:"e,omitempty"`
 }
 
-func newFieldMatcher() *FieldMatcher {
-	return &FieldMatcher{
-		Transitions:                        make(map[string]*ValueMatcher),
+func newFieldMatcher() *fieldMatcher {
+	return &fieldMatcher{
+		Transitions:                        make(map[string]*valueMatcher),
 		MatchingRuleIdentifiers:            nil,
 		MatchingAnythingButRuleIdentifiers: nil,
 		AnythingButTransitions:             nil,
 	}
 }
 
-func (f *FieldMatcher) AddAnythingButTransition(id RuleIdentifier, path string, fm *FieldMatcher) {
+func (f *fieldMatcher) AddAnythingButTransition(id RuleIdentifier, path string, fm *fieldMatcher) {
 	if f.AnythingButTransitions == nil {
-		f.AnythingButTransitions = make(map[string]map[RuleIdentifier]*FieldMatcher)
+		f.AnythingButTransitions = make(map[string]map[RuleIdentifier]*fieldMatcher)
 	}
 	if _, ok := f.AnythingButTransitions[path]; !ok {
-		f.AnythingButTransitions[path] = make(map[RuleIdentifier]*FieldMatcher)
+		f.AnythingButTransitions[path] = make(map[RuleIdentifier]*fieldMatcher)
 	}
 	f.AnythingButTransitions[path][id] = fm
 }
 
-func (f *FieldMatcher) GetTransition(key string) *ValueMatcher {
+func (f *fieldMatcher) GetTransition(key string) *valueMatcher {
 	vm, ok := f.Transitions[key]
 	if !ok {
 		vm = newValueMatcher()

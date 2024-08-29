@@ -1,14 +1,14 @@
 package hypermatch
 
-type ValueMatcher struct {
-	Nfa *NfaStep `json:"s,omitempty"`
+type valueMatcher struct {
+	Nfa *nfaStep `json:"s,omitempty"`
 	// Maybe shortcuts here in the future
 }
 
-func newValueMatcher() *ValueMatcher {
-	return &ValueMatcher{Nfa: newNfaStep()}
+func newValueMatcher() *valueMatcher {
+	return &valueMatcher{Nfa: newNfaStep()}
 }
 
-func (v *ValueMatcher) Transition(value []byte) []*FieldMatcher {
+func (v *valueMatcher) Transition(value []byte) []*fieldMatcher {
 	return transitionNfa(v.Nfa, value, nil)
 }
