@@ -16,7 +16,7 @@ func validatePatternAnythingBut(path string, pattern *Pattern) error {
 	return nil
 }
 
-func compilePatternAnythingBut(id RuleIdentifier, path string, pattern *Pattern, sourceFm *FieldMatcher, exitFm *FieldMatcher) *FieldMatcher {
+func compilePatternAnythingBut(id RuleIdentifier, path string, pattern *Pattern, sourceFm *fieldMatcher, exitFm *fieldMatcher) *fieldMatcher {
 	exitFm = compilePatternAnyOf(id, path, pattern, sourceFm, exitFm)
 	exitFm.MatchingAnythingButRuleIdentifiers = append(exitFm.MatchingAnythingButRuleIdentifiers, id)
 

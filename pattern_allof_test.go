@@ -56,7 +56,7 @@ func TestCompilePatternAllOf(t *testing.T) {
 	}
 }
 
-func matchAny(start *FieldMatcher, values []string) *FieldMatcher {
+func matchAny(start *fieldMatcher, values []string) *fieldMatcher {
 	for _, v := range values {
 		fm := transitionNfa(start.GetTransition("test").Nfa, str2value(v, nil, nil), nil)
 		if len(fm) > 0 {

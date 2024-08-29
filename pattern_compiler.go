@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func compileCondition(fm *FieldMatcher, id RuleIdentifier, cond *Condition) *FieldMatcher {
+func compileCondition(fm *fieldMatcher, id RuleIdentifier, cond *Condition) *fieldMatcher {
 	if cond == nil || len(cond.Path) == 0 {
 		return fm
 	}
@@ -32,7 +32,7 @@ func charReplace(data []byte, search byte, replace byte) []byte {
 	return data
 }
 
-func compilePattern(id RuleIdentifier, path string, pattern *Pattern, sourceFm *FieldMatcher, exitFm *FieldMatcher) *FieldMatcher {
+func compilePattern(id RuleIdentifier, path string, pattern *Pattern, sourceFm *fieldMatcher, exitFm *fieldMatcher) *fieldMatcher {
 	if pattern == nil || len(path) == 0 {
 		return sourceFm
 	}

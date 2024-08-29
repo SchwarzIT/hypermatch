@@ -8,7 +8,7 @@ import (
 )
 
 type HyperMatch struct {
-	matcher    *FieldMatcher
+	matcher    *fieldMatcher
 	rulesCount uint64
 }
 
@@ -71,7 +71,7 @@ func (m *HyperMatch) Match(properties []Property) []RuleIdentifier {
 	return matches.All()
 }
 
-func tryToMatch(properties []Property, i int, fm *FieldMatcher, set *matchSet) {
+func tryToMatch(properties []Property, i int, fm *fieldMatcher, set *matchSet) {
 	if i >= len(properties) {
 		return
 	}
@@ -86,13 +86,13 @@ func tryToMatch(properties []Property, i int, fm *FieldMatcher, set *matchSet) {
 	}
 }
 
-func match(f *FieldMatcher, field string, values []string) []*FieldMatcher {
+func match(f *fieldMatcher, field string, values []string) []*fieldMatcher {
 	vm, ok := f.Transitions[field]
 	if !ok {
 		return nil
 	}
 
-	var afms []*FieldMatcher
+	var afms []*fieldMatcher
 
 	for _, value := range values {
 		v := str2value(value, nil, nil)
