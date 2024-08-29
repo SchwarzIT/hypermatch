@@ -19,7 +19,14 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '1.23'
+        go-version-file: 'go.mod'
+        check-latest: true
+        cache: true
 
     - name: Test
-      run: go test -v ./...
+      run: go test -coverprofile cover.out -v ./...
+
+    - name: Send Coverage Report
+      uses: shogo82148/actions-goveralls@v1
+      with:
+        path-to-profile: cover.out
