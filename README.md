@@ -11,7 +11,7 @@
 # Introduction
 Hypermatch is a high-performance Go library that enables rapid matching of a large number of rules against events. Designed for speed and efficiency, hypermatch handles thousands of events per second with low latency, making it ideal for real-time systems.
 
-- **Fast Matching**: Matches events to a large set of rules in-memory with minimal delay.
+- **Fast Matching**: Matches events to a large set of rules in-memory with minimal delay  ... [it's really fast! (Benchmark)](_benchmark/benchmark.md)
 - **Readable Rule Format**: Serialize rules into human-readable JSON objects.
 - **Flexible Rule Syntax**: Supports various matching conditions, including equals, prefix, suffix, wildcard, anything-but, all-of, and any-of.
 
