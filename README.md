@@ -1,5 +1,6 @@
 [![SIT](https://img.shields.io/badge/SIT-awesome-blueviolet.svg)](https://jobs.schwarz)
 [![CI](https://github.com/SchwarzIT/hypermatch/actions/workflows/go-test.yml/badge.svg)](https://github.com/SchwarzIT/hypermatch/actions/workflows/go-test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/SchwarzIT/hypermatch/badge.svg?branch=main)](https://coveralls.io/github/SchwarzIT/hypermatch?branch=main)
 [![Go Report Card](https://goreportcard.com/badge/github.com/SchwarzIT/hypermatch)](https://goreportcard.com/report/github.com/SchwarzIT/hypermatch)
 [![Go Reference](https://pkg.go.dev/badge/github.com/schwarzit/hypermatch.svg)](https://pkg.go.dev/github.com/schwarzit/hypermatch)
 ![License](https://img.shields.io/github/license/SchwarzIT/hypermatch)
