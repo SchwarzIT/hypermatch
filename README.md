@@ -16,6 +16,8 @@ Hypermatch is a Go library that allows blazing fast matching of a large number o
 
 An event is a list of fields, which may be given as name/value pairs. A rule associates event field names with pattern to match the event values.
 
+... [it's fast!](_benchmark/benchmark.md)
+
 ![example](./example.png)
 
 # Quick Start
