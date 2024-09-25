@@ -4,7 +4,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/SchwarzIT/hypermatch)](https://goreportcard.com/report/github.com/SchwarzIT/hypermatch)
 [![Go Reference](https://pkg.go.dev/badge/github.com/schwarzit/hypermatch.svg)](https://pkg.go.dev/github.com/schwarzit/hypermatch)
 ![License](https://img.shields.io/github/license/SchwarzIT/hypermatch)
-![GitHub last commit](https://img.shields.io/github/last-commit/SchwarzIT/hypermatch)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/SchwarzIT/hypermatch)
 
 ![hypermatch logo](./logo/logo-small.png)
