@@ -5,6 +5,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/schwarzit/hypermatch.svg)](https://pkg.go.dev/github.com/schwarzit/hypermatch)
 ![License](https://img.shields.io/github/license/SchwarzIT/hypermatch)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/SchwarzIT/hypermatch)
+[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)  
 
 ![hypermatch logo](./logo/logo-small.png)
 
