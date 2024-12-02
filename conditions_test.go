@@ -53,7 +53,7 @@ func TestConditions_MarshalJSON(t *testing.T) {
 }
 
 func TestConditions_UnmarshalJSON(t *testing.T) {
-	data := []byte(`{"production": {"equals": true}}`)
+	data := []byte(`{"production": {"equals": "true"}}`)
 
 	var c ConditionSet
 	err := json.Unmarshal(data, &c)
