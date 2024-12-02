@@ -2,7 +2,6 @@ package hypermatch
 
 import (
 	"encoding/json"
-	"strings"
 )
 
 // ConditionSet represents a rule and consists of one or more items of type Condition
@@ -108,12 +107,9 @@ func (p *Pattern) UnmarshalJSON(data []byte) error {
 			}
 			p.Sub = ps
 		default:
-			d := string(v)
-			if strings.HasPrefix(d, "\"") {
-				d = d[1:]
-			}
-			if strings.HasSuffix(d, "\"") {
-				d = d[:len(d)-1]
+			var d string
+			if err := json.Unmarshal(v, &d); err != nil {
+				return err
 			}
 			p.Value = d
 		}

@@ -2,9 +2,10 @@ package hypermatch
 
 import (
 	"encoding/json"
-	"gotest.tools/v3/assert"
 	"log"
 	"testing"
+
+	"gotest.tools/v3/assert"
 )
 
 func TestConditions_MarshalJSON(t *testing.T) {
@@ -61,4 +62,16 @@ func TestConditions_UnmarshalJSON(t *testing.T) {
 	assert.Check(t, c[0].Path == "production")
 	assert.Check(t, c[0].Pattern.Type == PatternEquals)
 	assert.Check(t, c[0].Pattern.Value == "true")
+}
+
+func TestConditions_UnmarshalJSON_WithBackslashes(t *testing.T) {
+	data := []byte(`{"name": {"equals": "te\\st"}}`)
+
+	var c ConditionSet
+	err := json.Unmarshal(data, &c)
+	assert.NilError(t, err)
+	assert.Check(t, len(c) == 1)
+	assert.Check(t, c[0].Path == "name")
+	assert.Check(t, c[0].Pattern.Type == PatternEquals)
+	assert.Check(t, c[0].Pattern.Value == "te\\st")
 }
